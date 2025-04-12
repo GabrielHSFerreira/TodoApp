@@ -10,9 +10,9 @@
 
 	<ItemGroup>
 		<PackageReference Include="BetterOutcome" Version="1.1.0" />
-		<PackageReference Include="MediatR" Version="12.4.1" />
+		<PackageReference Include="MediatR" Version="12.5.0" />
 		<PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.4" />
-		<PackageReference Include="Swashbuckle.AspNetCore" Version="7.3.1" />
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="8.1.1" />
 	</ItemGroup>
 
 	<ItemGroup>
