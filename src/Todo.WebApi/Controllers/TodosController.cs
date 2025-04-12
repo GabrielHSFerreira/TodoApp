@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using BetterOutcome;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using TodoIntegrationTests.WebApi.Features.CreateTodo;
 using TodoIntegrationTests.WebApi.Features.DeleteTodo;
@@ -33,10 +34,11 @@ namespace TodoIntegrationTests.WebApi.Controllers
         {
             var response = await _sender.Send(new GetTodoQuery(id));
 
-            if (response is null)
-                return NotFound();
-
-            return Ok(response);
+            return response switch
+            {
+                Some<GetTodoResponse> todo => Ok(todo.Value),
+                _ => NotFound()
+            };
         }
 
         [HttpDelete("{id:int}")]

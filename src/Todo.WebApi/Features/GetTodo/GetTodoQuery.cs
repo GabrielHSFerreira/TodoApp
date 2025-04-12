@@ -1,8 +1,9 @@
-﻿using MediatR;
+﻿using BetterOutcome;
+using MediatR;
 
 namespace TodoIntegrationTests.WebApi.Features.GetTodo
 {
-    public record GetTodoQuery : IRequest<GetTodoResponse?>
+    public record GetTodoQuery : IRequest<Option<GetTodoResponse>>
     {
         public int Id { get; init; }
 

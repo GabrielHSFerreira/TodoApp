@@ -1,10 +1,11 @@
-﻿using MediatR;
+﻿using BetterOutcome;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using TodoIntegrationTests.WebApi.Contexts;
 
 namespace TodoIntegrationTests.WebApi.Features.GetTodo
 {
-    public class GetTodoHandler : IRequestHandler<GetTodoQuery, GetTodoResponse?>
+    public class GetTodoHandler : IRequestHandler<GetTodoQuery, Option<GetTodoResponse>>
     {
         private readonly TodoContext _context;
 
@@ -13,9 +14,9 @@ namespace TodoIntegrationTests.WebApi.Features.GetTodo
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public Task<GetTodoResponse?> Handle(GetTodoQuery request, CancellationToken cancellationToken)
+        public async Task<Option<GetTodoResponse>> Handle(GetTodoQuery request, CancellationToken cancellationToken)
         {
-            return _context.Todos
+            var todo = await _context.Todos
                 .Where(x => x.Id == request.Id)
                 .Select(x => new GetTodoResponse(
                     x.Id,
@@ -25,6 +26,8 @@ namespace TodoIntegrationTests.WebApi.Features.GetTodo
                     x.Description,
                     x.Status))
                 .FirstOrDefaultAsync(cancellationToken);
+
+            return Option<GetTodoResponse>.CreateFromValue(todo);
         }
     }
 }
