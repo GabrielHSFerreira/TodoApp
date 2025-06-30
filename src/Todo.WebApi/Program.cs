@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
+using Scalar.AspNetCore;
 using TodoIntegrationTests.WebApi.Contexts;
+using TodoIntegrationTests.WebApi.Features.DeleteTodo;
 
 namespace TodoIntegrationTests.WebApi
 {
@@ -14,7 +16,7 @@ namespace TodoIntegrationTests.WebApi
             builder.AddServiceDefaults();
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+            builder.Services.AddOpenApi();
             builder.Services.AddDbContext<TodoContext>(x => x.UseNpgsql(builder.Configuration.GetConnectionString("Database")));
             builder.Services.AddMediatR(x => x.RegisterServicesFromAssembly(typeof(Program).Assembly));
 
@@ -24,14 +26,16 @@ namespace TodoIntegrationTests.WebApi
 
             if (app.Environment.IsDevelopment())
             {
-                app.UseSwagger();
-                app.UseSwaggerUI();
+                app.MapOpenApi();
+                app.MapScalarApiReference();
             }
 
             app.UseAuthorization();
             app.MapControllers();
 
             Seed(app);
+
+            new DeleteTodoEndpoint().Register(app);
 
             app.Run();
         }

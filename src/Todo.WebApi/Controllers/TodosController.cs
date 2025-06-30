@@ -2,7 +2,6 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using TodoIntegrationTests.WebApi.Features.CreateTodo;
-using TodoIntegrationTests.WebApi.Features.DeleteTodo;
 using TodoIntegrationTests.WebApi.Features.GetTodo;
 using TodoIntegrationTests.WebApi.Features.UpdateTodo;
 
@@ -39,14 +38,6 @@ namespace TodoIntegrationTests.WebApi.Controllers
                 Some<GetTodoResponse> todo => Ok(todo.Value),
                 _ => NotFound()
             };
-        }
-
-        [HttpDelete("{id:int}")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public async Task<IActionResult> DeleteTodo(int id)
-        {
-            await _sender.Send(new DeleteTodoCommand(id));
-            return NoContent();
         }
 
         [HttpPatch("{id:int}")]
