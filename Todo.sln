@@ -11,6 +11,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Todo.AppHost", "src\Todo.Ap
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Todo.ServiceDefaults", "src\Todo.ServiceDefaults\Todo.ServiceDefaults.csproj", "{37172AE5-D3C5-D5F9-1B0B-6A477CBF7188}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Aspire", "Aspire", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{44D05C8E-2984-45DB-9AF5-FB65A09718D6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{D5362906-C4D3-47D3-9127-28DC16198664}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,6 +42,12 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{3825EB8B-C8C6-4FD5-9BDA-4BE9FB1AD917} = {44D05C8E-2984-45DB-9AF5-FB65A09718D6}
+		{8C09673F-BBF9-4C2B-ACED-4CA413D38405} = {D5362906-C4D3-47D3-9127-28DC16198664}
+		{E8534198-A97C-493A-9851-19BA1072AEEF} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{37172AE5-D3C5-D5F9-1B0B-6A477CBF7188} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B7221795-EC39-43EB-9BF6-BE6922816A03}
