@@ -1,8 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Net;
+using System.Net.Http.Json;
 using TodoApp.IntegrationTests.Extensions;
 using TodoApp.IntegrationTests.Fixtures;
 using TodoApp.WebApi.Domain;
+using TodoApp.WebApi.Features.CreateTodo;
 using TodoApp.WebApi.Features.GetTodo;
 
 namespace TodoApp.IntegrationTests.Todos
@@ -77,6 +79,37 @@ namespace TodoApp.IntegrationTests.Todos
             Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
             var isExistentTodo = await _factory.Context.Todos.AnyAsync(t => t.Id == createdTodo.Id);
             Assert.False(isExistentTodo, "Entity was not deleted.");
+        }
+
+        [Fact]
+        public async Task CreateTodo_ValidRequest_OkResponse()
+        {
+            // Arrange
+            var client = _factory.CreateClient();
+            var request = new CreateTodoCommand("Test title", "Test description");
+
+            // Act
+            var response = await client.PostAsJsonAsync("/todos", request);
+
+            // Assert
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        }
+
+        [Theory]
+        [InlineData(null, null)]
+        [InlineData(null, "Test")]
+        [InlineData("Test", null)]
+        [InlineData("", "")]
+        public async Task CreateTodo_InvalidRequest_BadRequestResponse(string? title, string? description)
+        {
+            // Arrange
+            var client = _factory.CreateClient();
+
+            // Act
+            var response = await client.PostAsJsonAsync("/todos", new { Title = title, Description = description });
+
+            // Assert
+            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
         }
 
         private async Task<Todo> CreateTodo()
