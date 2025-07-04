@@ -1,7 +1,9 @@
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
 using TodoApp.ServiceDefaults;
 using TodoApp.WebApi.Contexts;
+using TodoApp.WebApi.Features.CreateTodo;
 using TodoApp.WebApi.Features.DeleteTodo;
 
 namespace TodoApp.WebApi
@@ -20,6 +22,7 @@ namespace TodoApp.WebApi
             builder.Services.AddOpenApi();
             builder.Services.AddDbContext<TodoContext>(x => x.UseNpgsql(builder.Configuration.GetConnectionString("Database")));
             builder.Services.AddMediatR(x => x.RegisterServicesFromAssembly(typeof(Program).Assembly));
+            builder.Services.AddValidatorsFromAssemblyContaining<Program>();
 
             var app = builder.Build();
 
@@ -36,6 +39,7 @@ namespace TodoApp.WebApi
 
             Seed(app);
 
+            new CreateTodoEndpoint().Register(app);
             new DeleteTodoEndpoint().Register(app);
 
             app.Run();

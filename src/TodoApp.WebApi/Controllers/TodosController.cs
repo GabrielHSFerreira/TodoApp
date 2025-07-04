@@ -1,7 +1,6 @@
 ﻿using BetterOutcome;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using TodoApp.WebApi.Features.CreateTodo;
 using TodoApp.WebApi.Features.GetTodo;
 using TodoApp.WebApi.Features.UpdateTodo;
 
@@ -16,14 +15,6 @@ namespace TodoApp.WebApi.Controllers
         public TodosController(ISender sender)
         {
             _sender = sender ?? throw new ArgumentNullException(nameof(sender));
-        }
-
-        [HttpPost]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CreateTodoResponse))]
-        public async Task<IActionResult> CreateTodo(CreateTodoCommand command)
-        {
-            var response = await _sender.Send(command);
-            return Ok(response);
         }
 
         [HttpGet("{id:int}")]

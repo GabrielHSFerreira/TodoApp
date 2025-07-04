@@ -1,9 +1,8 @@
-﻿using MediatR;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace TodoApp.WebApi.Features.CreateTodo
 {
-    public record CreateTodoCommand : IRequest<CreateTodoResponse>
+    public record CreateTodoCommand
     {
         [Required]
         [MinLength(1)]
