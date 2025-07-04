@@ -77,7 +77,7 @@ namespace TodoApp.IntegrationTests.Todos
 
             // Assert
             Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
-            var isExistentTodo = await _factory.Context.Todos.AnyAsync(t => t.Id == createdTodo.Id);
+            var isExistentTodo = await IsTodoExistent(createdTodo.Id);
             Assert.False(isExistentTodo, "Entity was not deleted.");
         }
 
@@ -93,6 +93,10 @@ namespace TodoApp.IntegrationTests.Todos
 
             // Assert
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            var body = await response.GetResponseBody<CreateTodoResponse>();
+            Assert.NotEqual(0, body.CreatedId);
+            var isExistentTodo = await IsTodoExistent(body.CreatedId);
+            Assert.True(isExistentTodo);
         }
 
         [Theory]
@@ -121,6 +125,11 @@ namespace TodoApp.IntegrationTests.Todos
             await context.SaveChangesAsync();
 
             return newTodo;
+        }
+
+        private Task<bool> IsTodoExistent(int id)
+        {
+            return _factory.Context.Todos.AnyAsync(t => t.Id == id);
         }
     }
 }
