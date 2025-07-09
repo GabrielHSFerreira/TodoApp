@@ -11,7 +11,6 @@
 	<ItemGroup>
 		<PackageReference Include="BetterOutcome" Version="1.1.0" />
 		<PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="12.0.0" />
-		<PackageReference Include="MediatR" Version="12.5.0" />
 		<PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.6" />
 		<PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.4" />
 		<PackageReference Include="Scalar.AspNetCore" Version="2.5.3" />

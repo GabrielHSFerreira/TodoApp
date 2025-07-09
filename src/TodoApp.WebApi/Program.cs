@@ -22,7 +22,6 @@ namespace TodoApp.WebApi
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddOpenApi();
             builder.Services.AddDbContext<TodoContext>(x => x.UseNpgsql(builder.Configuration.GetConnectionString("Database")));
-            builder.Services.AddMediatR(x => x.RegisterServicesFromAssembly(typeof(Program).Assembly));
             builder.Services.AddValidatorsFromAssemblyContaining<Program>();
 
             var app = builder.Build();
