@@ -1,13 +1,10 @@
-﻿using MediatR;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using TodoApp.WebApi.Domain;
 
 namespace TodoApp.WebApi.Features.UpdateTodo
 {
-    public record UpdateTodoCommand : IRequest<bool>
+    public record UpdateTodoCommand
     {
-        public int Id { get; init; }
-
         [Required]
         [MinLength(1)]
         public string Title { get; init; }

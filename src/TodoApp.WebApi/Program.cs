@@ -6,6 +6,7 @@ using TodoApp.WebApi.Contexts;
 using TodoApp.WebApi.Features.CreateTodo;
 using TodoApp.WebApi.Features.DeleteTodo;
 using TodoApp.WebApi.Features.GetTodo;
+using TodoApp.WebApi.Features.UpdateTodo;
 
 namespace TodoApp.WebApi
 {
@@ -18,7 +19,6 @@ namespace TodoApp.WebApi
             var builder = WebApplication.CreateBuilder(args);
 
             builder.AddServiceDefaults();
-            builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddOpenApi();
             builder.Services.AddDbContext<TodoContext>(x => x.UseNpgsql(builder.Configuration.GetConnectionString("Database")));
@@ -35,13 +35,11 @@ namespace TodoApp.WebApi
                 app.MapScalarApiReference();
             }
 
-            app.UseAuthorization();
-            app.MapControllers();
-
             Seed(app);
 
             new CreateTodoEndpoint().Register(app);
             new GetTodoEndpoint().Register(app);
+            new UpdateTodoEndpoint().Register(app);
             new DeleteTodoEndpoint().Register(app);
 
             app.Run();

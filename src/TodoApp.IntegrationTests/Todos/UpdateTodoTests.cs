@@ -40,8 +40,9 @@ namespace TodoApp.IntegrationTests.Todos
         [InlineData(null, "Test", TodoStatus.Done)]
         [InlineData("Test", null, TodoStatus.Pending)]
         [InlineData("Test", "Test", null)]
-        [InlineData("", "", TodoStatus.Blocked)]
-        public async Task CreateTodo_InvalidRequest_BadRequestResponse(string? title, string? description, TodoStatus? status)
+        [InlineData("Test", "Test", (TodoStatus)1000)]
+        [InlineData("", "", (TodoStatus)1000)]
+        public async Task UpdateTodo_InvalidRequest_BadRequestResponse(string? title, string? description, TodoStatus? status)
         {
             // Arrange
             var client = _factory.CreateClient();
