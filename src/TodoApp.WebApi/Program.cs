@@ -5,6 +5,7 @@ using TodoApp.ServiceDefaults;
 using TodoApp.WebApi.Contexts;
 using TodoApp.WebApi.Features.CreateTodo;
 using TodoApp.WebApi.Features.DeleteTodo;
+using TodoApp.WebApi.Features.GetTodo;
 
 namespace TodoApp.WebApi
 {
@@ -40,6 +41,7 @@ namespace TodoApp.WebApi
             Seed(app);
 
             new CreateTodoEndpoint().Register(app);
+            new GetTodoEndpoint().Register(app);
             new DeleteTodoEndpoint().Register(app);
 
             app.Run();

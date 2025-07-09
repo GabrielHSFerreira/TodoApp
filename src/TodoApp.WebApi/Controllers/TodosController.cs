@@ -1,7 +1,5 @@
-﻿using BetterOutcome;
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using TodoApp.WebApi.Features.GetTodo;
 using TodoApp.WebApi.Features.UpdateTodo;
 
 namespace TodoApp.WebApi.Controllers
@@ -15,20 +13,6 @@ namespace TodoApp.WebApi.Controllers
         public TodosController(ISender sender)
         {
             _sender = sender ?? throw new ArgumentNullException(nameof(sender));
-        }
-
-        [HttpGet("{id:int}")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetTodoResponse))]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetTodo(int id)
-        {
-            var response = await _sender.Send(new GetTodoQuery(id));
-
-            return response switch
-            {
-                Some<GetTodoResponse> todo => Ok(todo.Value),
-                _ => NotFound()
-            };
         }
 
         [HttpPatch("{id:int}")]
