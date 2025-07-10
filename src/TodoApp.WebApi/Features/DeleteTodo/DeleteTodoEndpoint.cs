@@ -8,7 +8,7 @@ namespace TodoApp.WebApi.Features.DeleteTodo
     {
         public void Register(IEndpointRouteBuilder builder)
         {
-            builder.MapDelete("/todos/{id:int}", DeleteTodo);
+            builder.MapDelete("/todos/{id:int}", DeleteTodo).WithTags(EndpointTags.Todos);
         }
 
         private static async Task<NoContent> DeleteTodo(int id, TodoContext context, CancellationToken cancellationToken)

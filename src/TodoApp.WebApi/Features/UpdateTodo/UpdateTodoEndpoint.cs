@@ -8,7 +8,7 @@ namespace TodoApp.WebApi.Features.UpdateTodo
     {
         public void Register(IEndpointRouteBuilder builder)
         {
-            builder.MapPatch("/todos/{id:int}", UpdateTodo);
+            builder.MapPatch("/todos/{id:int}", UpdateTodo).WithTags(EndpointTags.Todos);
         }
 
         private static async Task<Results<NoContent, ValidationProblem, NotFound>> UpdateTodo(

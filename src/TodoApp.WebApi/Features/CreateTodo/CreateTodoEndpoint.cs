@@ -9,7 +9,7 @@ namespace TodoApp.WebApi.Features.CreateTodo
     {
         public void Register(IEndpointRouteBuilder builder)
         {
-            builder.MapPost("/todos", CreateTodo);
+            builder.MapPost("/todos", CreateTodo).WithTags(EndpointTags.Todos);
         }
 
         private static async Task<Results<Ok<CreateTodoResponse>, ValidationProblem>> CreateTodo(

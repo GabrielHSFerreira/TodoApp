@@ -8,7 +8,7 @@ namespace TodoApp.WebApi.Features.GetTodo
     {
         public void Register(IEndpointRouteBuilder builder)
         {
-            builder.MapGet("/todos/{id:int}", GetTodo);
+            builder.MapGet("/todos/{id:int}", GetTodo).WithTags(EndpointTags.Todos);
         }
 
         private static async Task<Results<Ok<GetTodoResponse>, NotFound>> GetTodo(
