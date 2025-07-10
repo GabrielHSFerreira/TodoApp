@@ -1,6 +1,8 @@
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
+using Serilog;
+using Serilog.Events;
 using TodoApp.ServiceDefaults;
 using TodoApp.WebApi.Contexts;
 using TodoApp.WebApi.Features.CreateTodo;
@@ -16,8 +18,15 @@ namespace TodoApp.WebApi
 
         public static void Main(string[] args)
         {
+            Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Override("Microsoft.AspNetCore", LogEventLevel.Warning)
+                .Enrich.FromLogContext()
+                .WriteTo.Console()
+                .CreateLogger();
+
             var builder = WebApplication.CreateBuilder(args);
 
+            builder.Host.UseSerilog(Log.Logger);
             builder.AddServiceDefaults();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddOpenApi();
@@ -26,6 +35,7 @@ namespace TodoApp.WebApi
 
             var app = builder.Build();
 
+            app.UseSerilogRequestLogging();
             app.MapDefaultEndpoints();
 
             if (app.Environment.IsDevelopment())
