@@ -4,4 +4,4 @@
 
 A todo project to try things.
 
-Run the **TodoApp.AppHost** project and let Aspire do the :smiley:!
+Run the **TodoApp.AppHost** project and let Aspire do the job :smiley:.
