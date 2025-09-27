@@ -21,7 +21,7 @@ namespace TodoApp.IntegrationTests.Todos
             var client = _factory.CreateClient();
 
             // Act
-            var response = await client.GetAsync("/todos/150000");
+            var response = await client.GetAsync("/todos/150000", TestContext.Current.CancellationToken);
 
             // Assert
             Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
@@ -31,11 +31,11 @@ namespace TodoApp.IntegrationTests.Todos
         public async Task GetTodo_Existent_FoundResponse()
         {
             // Arrange
-            var createdTodo = await _factory.Context.CreateTodo();
+            var createdTodo = await _factory.Context.CreateTodo(TestContext.Current.CancellationToken);
             var client = _factory.CreateClient();
 
             // Act
-            var response = await client.GetAsync($"/todos/{createdTodo.Id}");
+            var response = await client.GetAsync($"/todos/{createdTodo.Id}", TestContext.Current.CancellationToken);
 
             // Assert
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);

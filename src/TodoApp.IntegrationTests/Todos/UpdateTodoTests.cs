@@ -20,19 +20,22 @@ namespace TodoApp.IntegrationTests.Todos
         {
             // Arrange
             var client = _factory.CreateClient();
-            var oldTodo = await _factory.Context.CreateTodo();
+            var oldTodo = await _factory.Context.CreateTodo(TestContext.Current.CancellationToken);
             var request = new UpdateTodoCommand("New title", "New description", TodoStatus.Done);
 
             // Act
-            var response = await client.PatchAsJsonAsync($"/todos/{oldTodo.Id}", request);
+            var response = await client.PatchAsJsonAsync(
+                $"/todos/{oldTodo.Id}",
+                request,
+                TestContext.Current.CancellationToken);
 
             // Assert
             Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
-            var newTodo = await _factory.Context.Todos.FindAsync(oldTodo.Id);
-            Assert.NotNull(newTodo);
-            Assert.Equal(request.Title, newTodo.Title);
-            Assert.Equal(request.Description, newTodo.Description);
-            Assert.Equal(request.Status, newTodo.Status);
+            var updatedTodo = await _factory.Context.FindTodo(oldTodo.Id, TestContext.Current.CancellationToken);
+            Assert.NotNull(updatedTodo);
+            Assert.Equal(request.Title, updatedTodo.Title);
+            Assert.Equal(request.Description, updatedTodo.Description);
+            Assert.Equal(request.Status, updatedTodo.Status);
         }
 
         [Theory]
@@ -46,10 +49,13 @@ namespace TodoApp.IntegrationTests.Todos
         {
             // Arrange
             var client = _factory.CreateClient();
-            var oldTodo = await _factory.Context.CreateTodo();
+            var oldTodo = await _factory.Context.CreateTodo(TestContext.Current.CancellationToken);
 
             // Act
-            var response = await client.PatchAsJsonAsync($"/todos/{oldTodo.Id}", new { Title = title, Description = description, Status = status });
+            var response = await client.PatchAsJsonAsync(
+                $"/todos/{oldTodo.Id}",
+                new { Title = title, Description = description, Status = status },
+                TestContext.Current.CancellationToken);
 
             // Assert
             Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
