@@ -21,19 +21,20 @@ namespace TodoApp.IntegrationTests.Fixtures
             _postgreSqlContainer = new PostgreSqlBuilder().Build();
         }
 
-        Task IAsyncLifetime.InitializeAsync()
-        {
-            return _postgreSqlContainer.StartAsync();
-        }
-
-        Task IAsyncLifetime.DisposeAsync()
-        {
-            return _postgreSqlContainer.DisposeAsync().AsTask();
-        }
-
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
             builder.UseSetting("ConnectionStrings:Database", _postgreSqlContainer.GetConnectionString());
+        }
+
+        public async ValueTask InitializeAsync()
+        {
+            await _postgreSqlContainer.StartAsync();
+        }
+
+        public override async ValueTask DisposeAsync()
+        {
+            await _postgreSqlContainer.DisposeAsync();
+            await base.DisposeAsync();
         }
     }
 }

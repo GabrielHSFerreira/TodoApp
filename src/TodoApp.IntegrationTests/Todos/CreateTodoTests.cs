@@ -23,13 +23,13 @@ namespace TodoApp.IntegrationTests.Todos
             var request = new CreateTodoCommand("Test title", "Test description");
 
             // Act
-            var response = await client.PostAsJsonAsync("/todos", request);
+            var response = await client.PostAsJsonAsync("/todos", request, TestContext.Current.CancellationToken);
 
             // Assert
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             var body = await response.GetResponseBody<CreateTodoResponse>();
             Assert.NotEqual(0, body.CreatedId);
-            var isExistentTodo = await _factory.Context.TodoExists(body.CreatedId);
+            var isExistentTodo = await _factory.Context.TodoExists(body.CreatedId, TestContext.Current.CancellationToken);
             Assert.True(isExistentTodo);
         }
 
@@ -44,7 +44,10 @@ namespace TodoApp.IntegrationTests.Todos
             var client = _factory.CreateClient();
 
             // Act
-            var response = await client.PostAsJsonAsync("/todos", new { Title = title, Description = description });
+            var response = await client.PostAsJsonAsync(
+                "/todos",
+                new { Title = title, Description = description },
+                TestContext.Current.CancellationToken);
 
             // Assert
             Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
