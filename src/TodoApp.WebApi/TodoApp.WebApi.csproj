@@ -10,9 +10,9 @@
 	<ItemGroup>
 		<PackageReference Include="BetterOutcome" Version="1.1.0" />
 		<PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="12.1.1" />
-		<PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.1" />
+		<PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.2" />
 		<PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="10.0.0" />
-		<PackageReference Include="Scalar.AspNetCore" Version="2.11.10" />
+		<PackageReference Include="Scalar.AspNetCore" Version="2.12.24" />
 		<PackageReference Include="Serilog.AspNetCore" Version="10.0.0" />
 	</ItemGroup>
 
