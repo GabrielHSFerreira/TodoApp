@@ -5,13 +5,13 @@ using TodoApp.WebApi.Features.GetTodo;
 
 namespace TodoApp.IntegrationTests.Todos
 {
-    public class GetTodoTests : IClassFixture<WebApiFactory>
+    public class GetTodoTests
     {
         private readonly WebApiFactory _factory;
 
-        public GetTodoTests(WebApiFactory factory)
+        public GetTodoTests(PostgreSqlDatabase database)
         {
-            _factory = factory ?? throw new ArgumentNullException(nameof(factory));
+            _factory = new WebApiFactory(database);
         }
 
         [Fact]
