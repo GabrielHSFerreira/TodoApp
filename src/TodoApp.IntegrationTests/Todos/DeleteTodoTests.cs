@@ -3,13 +3,13 @@ using TodoApp.IntegrationTests.Fixtures;
 
 namespace TodoApp.IntegrationTests.Todos
 {
-    public class DeleteTodoTests : IClassFixture<WebApiFactory>
+    public class DeleteTodoTests
     {
         private readonly WebApiFactory _factory;
 
-        public DeleteTodoTests(WebApiFactory factory)
+        public DeleteTodoTests(PostgreSqlDatabase database)
         {
-            _factory = factory ?? throw new ArgumentNullException(nameof(factory));
+            _factory = new WebApiFactory(database);
         }
 
         [Fact]
