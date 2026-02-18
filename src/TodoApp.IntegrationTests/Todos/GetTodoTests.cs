@@ -9,9 +9,9 @@ namespace TodoApp.IntegrationTests.Todos
     {
         private readonly WebApiFactory _factory;
 
-        public GetTodoTests(PostgreSqlDatabase database)
+        public GetTodoTests(WebApiFactory factory)
         {
-            _factory = new WebApiFactory(database);
+            _factory = factory ?? throw new ArgumentNullException(nameof(factory));
         }
 
         [Fact]
