@@ -1,5 +1,16 @@
 name: CI/CD
-on: [push]
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+    types:
+      - opened
+      - reopened
+      - synchronize
+
 jobs:
     CI:
         runs-on: ubuntu-latest
