@@ -21,7 +21,7 @@ namespace TodoApp.IntegrationTests.Fixtures
 
         public WebApiFactory()
         {
-            _postgreSqlContainer = new PostgreSqlBuilder("postgres:18.1").Build();
+            _postgreSqlContainer = new PostgreSqlBuilder("postgres:18.4-alpine").Build();
         }
 
         protected override void ConfigureWebHost(IWebHostBuilder builder)
