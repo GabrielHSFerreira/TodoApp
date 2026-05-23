@@ -1,11 +1,19 @@
-var builder = DistributedApplication.CreateBuilder(args);
+namespace TodoApp.AppHost;
 
-var postgres = builder.AddPostgres("postgres")
-    .WithImage("postgres", "18.1")
-    .AddDatabase("Database", databaseName: "todoapp-db");
+public static class Program
+{
+    private static async Task Main(string[] args)
+    {
+        var builder = DistributedApplication.CreateBuilder(args);
 
-builder.AddProject<Projects.TodoApp_WebApi>("todoapp-webapi")
-    .WithReference(postgres)
-    .WaitFor(postgres);
+        var postgres = builder.AddPostgres("postgres")
+            .WithImage("postgres", "18.4-alpine")
+            .AddDatabase("Database", databaseName: "todoapp-db");
 
-await builder.Build().RunAsync();
+        builder.AddProject<Projects.TodoApp_WebApi>("todoapp-webapi")
+            .WithReference(postgres)
+            .WaitFor(postgres);
+
+        await builder.Build().RunAsync();
+    }
+}
